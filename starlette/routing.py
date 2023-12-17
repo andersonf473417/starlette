@@ -423,7 +423,7 @@ class Mount(BaseRoute):
             route_path = scope.get("route_path", re.sub(r"^" + root_path, "", path))
             mount_match = self.path_regex.match(route_path)
             path_match = self.routes == [] or any(
-                [route.matches(scope)[0] == Match.FULL for route in self.routes]
+                [route.matches(scope)[0] in (Match.FULL, Match.PARTIAL) for route in self.routes]
             )
             if mount_match and path_match:
                 matched_params = mount_match.groupdict()
@@ -807,7 +807,7 @@ class Router:
                     await response(scope, receive, send)
                     return
 
-        await self.default(scope, receive, send)
+        await self.not_found(scope, receive, send)
 
     def __eq__(self, other: typing.Any) -> bool:
         return isinstance(other, Router) and self.routes == other.routes
