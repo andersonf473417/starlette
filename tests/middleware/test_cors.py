@@ -776,7 +776,7 @@ def test_cors_origins_list_and_regex_both_accepted(test_client_factory: TestClie
 
 def test_cors_max_age_header(test_client_factory: TestClientFactory) -> None:
     def homepage(request: Request) -> PlainTextResponse:
-        pass  # pragma: no cover
+        return PlainTextResponse("Hello")
 
     app_default = Starlette(
         routes=[Route("/", endpoint=homepage)],
@@ -817,7 +817,7 @@ def test_cors_no_origin_header_no_cors_processing(test_client_factory: TestClien
 
 def test_cors_header_name_case_insensitive(test_client_factory: TestClientFactory) -> None:
     def homepage(request: Request) -> PlainTextResponse:
-        pass  # pragma: no cover
+        return PlainTextResponse("Hello")
 
     app = Starlette(
         routes=[Route("/", endpoint=homepage)],
